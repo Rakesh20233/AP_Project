@@ -18,7 +18,7 @@ public class Scene4_Comp{
 	private Button Roll_bn;
 
 	public void setonClickRoll(ActionEvent e){
-		/* System.out.println("Setting gif"); */
+		// Compile it again
 		Image img = new Image(getClass().getResourceAsStream("rolling_dices.gif"));
 		Rolling_Dice_Img.setImage(img);
 		try {
@@ -29,26 +29,32 @@ public class Scene4_Comp{
 
 		switch(getRandomRoll()){
 			case 1:
+				System.out.println("Got 1");
 				img = new Image(getClass().getResourceAsStream("diceroll_1.png"));
 				Rolling_Dice_Img.setImage(img);
 				break;
 			case 2:
+				System.out.println("Got 2");
 				img = new Image(getClass().getResourceAsStream("diceroll_2.png"));
 				Rolling_Dice_Img.setImage(img);
 				break;
 			case 3:
+				System.out.println("Got 3");
 				img = new Image(getClass().getResourceAsStream("diceroll_3.png"));
 				Rolling_Dice_Img.setImage(img);
 				break;
 			case 4:
-				img = new Image(getClass().getResourceAsStream("diceroll_4.png"));
+				System.out.println("Got 4");
+				img = new Image(getClass().getResourceAsStream("diceroll_4.jpg"));
 				Rolling_Dice_Img.setImage(img);
 				break;
 			case 5:
+				System.out.println("Got 5");
 				img = new Image(getClass().getResourceAsStream("diceroll_5.png"));
 				Rolling_Dice_Img.setImage(img);
 				break;
 			case 6:
+				System.out.println("Got 6");
 				img = new Image(getClass().getResourceAsStream("diceroll_6.png"));
 				Rolling_Dice_Img.setImage(img);
 				break;
