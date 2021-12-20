@@ -2,11 +2,16 @@ package com.example.programming_project;
 
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+
 public class GameLogic {
 	public Player pl1;
 	public Player pl2;
 
 	private boolean chance;
+
+	ArrayList<Snakes> listOfSnakes;
+	ArrayList<Ladder> listOfLadders;
 
 	public GameLogic(ImageView pl1_image, ImageView pl2_image){
 		System.out.println("Game logic constructor called");
@@ -16,6 +21,9 @@ public class GameLogic {
 		pl1 = new Player(0, 9, pl1_image);
 		pl2 = new Player(0, 9, pl2_image);
 		chance = true;
+
+		listOfSnakes = new ArrayList<>();
+		listOfLadders = new ArrayList<>();
 	}
 
 	public boolean getChance() { return chance; }

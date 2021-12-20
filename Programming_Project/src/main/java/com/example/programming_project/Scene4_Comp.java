@@ -69,64 +69,44 @@ public class Scene4_Comp {
 				img = new Image(getClass().getResourceAsStream("diceroll_1.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 2:
 				System.out.println("Got 2");
 				img = new Image(getClass().getResourceAsStream("diceroll_2.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 3:
 				System.out.println("Got 3");
 				img = new Image(getClass().getResourceAsStream("diceroll_3.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 4:
 				System.out.println("Got 4");
 				img = new Image(getClass().getResourceAsStream("gimpfiles/diceroll_4.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 5:
 				System.out.println("Got 5");
 				img = new Image(getClass().getResourceAsStream("diceroll_5.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 6:
 				System.out.println("Got 6");
 				img = new Image(getClass().getResourceAsStream("diceroll_6.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 		}
-
 		playTransitions(slides);
+
+		if (game.getChance())
+			Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+		else
+			Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 	}
 
 	private void playTransitions(ImageView[] slides){
@@ -173,6 +153,7 @@ class moveThePlayer implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 		try{
 			Thread.sleep(1000);
@@ -198,18 +179,24 @@ class moveThePlayer implements Runnable {
 			}
 			game.toggleChance();
 		}
-		if (!game.getChance()){
-			try {
-				Thread.sleep(1000);
-			}catch (Exception e){
-				e.printStackTrace();
-			}
-			System.out.println("Computer turn...");
-			cur_scene.setonClickRoll(new ActionEvent());
-		}
+		if (!game.getChance())
+			Platform.runLater(new moveTheComp(cur_scene));
 	}
 
 	// private void path_transition(int cur_x, int cur_y, int new_x, int new_y){
 	//     // deal with this later
 	// }
+}
+
+class moveTheComp implements Runnable {
+	Scene4_Comp cur_scene;
+	moveTheComp (Scene4_Comp sc){
+		cur_scene = sc;
+	}
+
+	@Override
+	public void run(){
+		System.out.println("Computer's turn...");
+		cur_scene.setonClickRoll(new ActionEvent());
+	}
 }
