@@ -2,6 +2,7 @@ module com.example.programming_project {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+	requires javafx.media;
 	requires transitive javafx.graphics;
 
     requires org.controlsfx.controls;

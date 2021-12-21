@@ -6,7 +6,7 @@ buildFiles = $(path_to_target)HelloApplication.class $(path_to_target)HelloContr
 
 path_to_fx = /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.1/lib/
 
-javafx_Library = javafx.controls,javafx.fxml
+javafx_Library = javafx.controls,javafx.fxml,javafx.media
 
 BUILD_FLAGS = --module-path $(path_to_fx) --add-modules $(javafx_Library)
 

@@ -53,5 +53,7 @@
                 <Font name="System Bold" size="22.0" />
             </font>
         </Button>
+      <Button layoutX="596.0" layoutY="421.0" mnemonicParsing="false" onAction="#pauseMedia" text="| |" />
+      <Button layoutX="638.0" layoutY="421.0" mnemonicParsing="false" onAction="#nextMedia" text="Next" />
     </children>
 </AnchorPane>
