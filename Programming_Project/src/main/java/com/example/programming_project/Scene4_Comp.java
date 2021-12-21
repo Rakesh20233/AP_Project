@@ -69,36 +69,81 @@ public class Scene4_Comp {
 				img = new Image(getClass().getResourceAsStream("diceroll_1.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
+<<<<<<< HEAD
+				if (game.getChance())
+					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+				else
+					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+=======
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 				break;
 			case 2:
 				System.out.println("Got 2");
 				img = new Image(getClass().getResourceAsStream("diceroll_2.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
+<<<<<<< HEAD
+				if (game.getChance())
+					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+				else
+					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+=======
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 				break;
 			case 3:
 				System.out.println("Got 3");
 				img = new Image(getClass().getResourceAsStream("diceroll_3.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
+<<<<<<< HEAD
+				if (game.getChance())
+					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+				else
+					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+=======
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 				break;
 			case 4:
 				System.out.println("Got 4");
 				img = new Image(getClass().getResourceAsStream("gimpfiles/diceroll_4.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
+<<<<<<< HEAD
+				if (game.getChance())
+					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+				else
+					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+=======
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 				break;
 			case 5:
 				System.out.println("Got 5");
 				img = new Image(getClass().getResourceAsStream("diceroll_5.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
+<<<<<<< HEAD
+				if (game.getChance())
+					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+				else
+					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+=======
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 				break;
 			case 6:
 				System.out.println("Got 6");
 				img = new Image(getClass().getResourceAsStream("diceroll_6.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
+<<<<<<< HEAD
+				if (game.getChance())
+					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+				else
+					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+				break;
+		}
+
+		playTransitions(slides);
+=======
 				break;
 		}
 		playTransitions(slides);
@@ -107,6 +152,7 @@ public class Scene4_Comp {
 			Platform.runLater(new moveThePlayer(roll, this, game.pl1));
 		else
 			Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 	}
 
 	private void playTransitions(ImageView[] slides){
@@ -116,7 +162,11 @@ public class Scene4_Comp {
 			SequentialTransition sequentialTransition = new SequentialTransition();
 
 			PauseTransition pause = new PauseTransition(Duration.millis(1000));
+<<<<<<< HEAD
+			FadeTransition fadeout = getFadeTransition(slide, 1.0, 0.0, 500);
+=======
 			FadeTransition fadeout = getFadeTransition(slide, 1.0, 0.0, 1000);
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 
 			sequentialTransition.getChildren().addAll(pause, fadeout);
 			slideshow.getChildren().add(sequentialTransition);
@@ -153,7 +203,10 @@ class moveThePlayer implements Runnable {
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	@Override
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 	public void run() {
 		try{
 			Thread.sleep(1000);
@@ -179,14 +232,28 @@ class moveThePlayer implements Runnable {
 			}
 			game.toggleChance();
 		}
+<<<<<<< HEAD
+		if (!game.getChance()){
+			try {
+				Thread.sleep(1000);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			System.out.println("Computer turn...");
+			cur_scene.setonClickRoll(new ActionEvent());
+		}
+=======
 		if (!game.getChance())
 			Platform.runLater(new moveTheComp(cur_scene));
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 	}
 
 	// private void path_transition(int cur_x, int cur_y, int new_x, int new_y){
 	//     // deal with this later
 	// }
 }
+<<<<<<< HEAD
+=======
 
 class moveTheComp implements Runnable {
 	Scene4_Comp cur_scene;
@@ -200,3 +267,4 @@ class moveTheComp implements Runnable {
 		cur_scene.setonClickRoll(new ActionEvent());
 	}
 }
+>>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
