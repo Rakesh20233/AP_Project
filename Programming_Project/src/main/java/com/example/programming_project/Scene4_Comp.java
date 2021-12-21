@@ -116,7 +116,7 @@ public class Scene4_Comp {
 			SequentialTransition sequentialTransition = new SequentialTransition();
 
 			PauseTransition pause = new PauseTransition(Duration.millis(1000));
-			FadeTransition fadeout = getFadeTransition(slide, 1.0, 0.0, 500);
+			FadeTransition fadeout = getFadeTransition(slide, 1.0, 0.0, 1000);
 
 			sequentialTransition.getChildren().addAll(pause, fadeout);
 			slideshow.getChildren().add(sequentialTransition);

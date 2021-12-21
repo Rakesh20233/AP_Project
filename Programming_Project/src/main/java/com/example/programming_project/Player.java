@@ -28,6 +28,7 @@ public class Player {
 	}
 
 	public void move(int moveby){
+		// a bit buggy currently
 		if (direction){
 			if (x_location + moveby > 9){
 				y_location--;
@@ -38,11 +39,11 @@ public class Player {
 			}
 		}
 		else {
-			if (x_location - moveby < 0 && y_location-1 >= 0){
+			if (x_location - moveby < 0 && y_location >= 0){
 				y_location--;
 				x_location = Math.abs(1+(x_location-moveby));
 				direction = true;
-			}else if (y_location-1 >= 0){
+			}else if (y_location >= 0){
 				x_location -= moveby;
 			}
 		}
