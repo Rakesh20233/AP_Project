@@ -1,16 +1,22 @@
 package com.example.programming_project;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import java.util.Random;
@@ -171,29 +177,84 @@ class moveThePlayer implements Runnable {
 		if (roll == 6){
 			if (!pl.started){
 				pl.start();
-				game_board.add(player_pawn, pl.x_location, pl.y_location);
+				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
+				Bounds og_xy = player_pawn.getBoundsInLocal();
+				Bounds final_xy = game_board.getCellBounds(0, 9);
+
+				path_transition(og_xy, final_xy);
 				// give another move
 			}else{
+				/* Bounds og_xy = game_board.getCellBounds(pl.x_location, pl.y_location); */
+				Bounds og_xy = player_pawn.getBoundsInLocal();
+				/* getCenter(og_xy); */
 				pl.move(roll);
-				game_board.getChildren().remove(player_pawn);
-				game_board.add(player_pawn, pl.x_location, pl.y_location);
+				/* game_board.getChildren().remove(player_pawn); */
+				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
+				Bounds final_xy = game_board.getCellBounds(pl.x_location, pl.y_location);
+				/* game_board.getChildren().remove(player_pawn); */
+				/* getCenter(final_xy); */
+
+				path_transition(og_xy, final_xy);
+
 				// give another move to player
 			}
 		}else{
 			if (pl.started){
+				/* Bounds og_xy = game_board.getCellBounds(pl.x_location, pl.y_location); */
+				Bounds og_xy = player_pawn.getBoundsInLocal();
+				/* getCenter(og_xy); */
 				pl.move(roll);
-				game_board.getChildren().remove(player_pawn);
-				game_board.add(player_pawn, pl.x_location, pl.y_location);
+				/* game_board.getChildren().remove(player_pawn); */
+				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
+				Bounds final_xy = game_board.getCellBounds(pl.x_location, pl.y_location);
+				/* getCenter(final_xy); */
+				/* game_board.getChildren().remove(player_pawn); */
+				path_transition(og_xy, final_xy);
 			}
 			game.toggleChance();
 		}
-		if (!game.getChance())
-			Platform.runLater(new moveTheComp(cur_scene));
+		/* if (!game.getChance()) */
+		/*     Platform.runLater(new moveTheComp(cur_scene)); */
 	}
 
-	// private void path_transition(int cur_x, int cur_y, int new_x, int new_y){
-	//     // deal with this later
-	// }
+	private double getCenter(Bounds xy, boolean x){
+		if (x){
+			System.out.println("X is: "+(xy.getMaxX()+xy.getMinX())/2);
+			return (xy.getMaxX()+xy.getMinX())/2;
+		}
+		System.out.println("Y is: "+(xy.getMaxY()+xy.getMinY())/2);
+		return (xy.getMaxY()+xy.getMinY())/2;
+	}
+
+	private void path_transition(Bounds og_xy, Bounds final_xy){
+		System.out.println("Starting to transition");
+		/* Path pthMove = new Path(); */
+		/* pthMove.getElements().add(new MoveTo(cur_x, cur_y)); */
+		/* pthMove.getElements().add(new LineTo(new_x, new_y)); */
+
+		Line pthMove = new Line(getCenter(og_xy, true), getCenter(og_xy, false), getCenter(final_xy, true), getCenter(final_xy, false));
+		/* pthMove.toFront(); */
+
+		PathTransition path = new PathTransition();
+		path.setDuration(Duration.seconds(3));
+		path.setPath(pthMove);
+		path.setNode(player_pawn);
+		path.setCycleCount(2);
+		path.setAutoReverse(true);
+		path.setOnFinished(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent a){
+				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
+				System.out.println("Done playing");
+				Bounds tmp = player_pawn.localToScene(player_pawn.getBoundsInLocal());
+				System.out.println("Player pos: "+getCenter(tmp, true)+" "+getCenter(tmp, false));
+				if (!game.getChance())
+					Platform.runLater(new moveTheComp(cur_scene));
+			}
+		});
+		System.out.println("Playing the path");
+		path.play();
+	}
 }
 
 class moveTheComp implements Runnable {
@@ -204,6 +265,11 @@ class moveTheComp implements Runnable {
 
 	@Override
 	public void run(){
+		try {
+			Thread.sleep(1000);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		System.out.println("Computer's turn...");
 		cur_scene.setonClickRoll(new ActionEvent());
 	}

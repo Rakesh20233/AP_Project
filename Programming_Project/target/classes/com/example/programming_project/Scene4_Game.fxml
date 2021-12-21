@@ -71,14 +71,14 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="player_pawn" fitHeight="43.0" fitWidth="30.0" layoutX="181.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@gimpfiles/player_pawn.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="comp_pawn" fitHeight="43.0" fitWidth="50.0" layoutX="217.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="comp_pawn" fitHeight="68.0" fitWidth="50.0" layoutX="208.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@computer_pawn.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player_pawn" fitHeight="43.0" fitWidth="30.0" layoutX="187.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@gimpfiles/player_pawn.png" />
          </image>
       </ImageView>
    </children>
