@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -101,15 +102,15 @@ public class Scene4_Comp {
 				slides[1] = Final_Roll;
 				break;
 		}
-		playTransitions(slides);
+		playTransitions(slides, roll);
 
-		if (game.getChance())
-			Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-		else
-			Platform.runLater(new moveThePlayer(roll, this, game.pl2));
+		// if (game.getChance())
+		//     Platform.runLater(new moveThePlayer(roll, this, game.pl1));
+		// else
+		//     Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 	}
 
-	private void playTransitions(ImageView[] slides){
+	private void playTransitions(ImageView[] slides, int roll){
 		SequentialTransition slideshow = new SequentialTransition();
 
 		for(ImageView slide : slides){
@@ -121,6 +122,19 @@ public class Scene4_Comp {
 			sequentialTransition.getChildren().addAll(pause, fadeout);
 			slideshow.getChildren().add(sequentialTransition);
 		}
+
+		Scene4_Comp tmpScene = this;
+
+		slideshow.setOnFinished(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (game.getChance()){
+					Platform.runLater(new moveThePlayer(roll, tmpScene, game.pl1));
+				}else {
+					Platform.runLater(new moveThePlayer(roll, tmpScene, game.pl2));
+				}
+			}
+		});
 
 		slideshow.play();
 	}
