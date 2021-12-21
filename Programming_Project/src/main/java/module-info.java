@@ -10,6 +10,7 @@ module com.example.programming_project {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires javafx.media;
 
     opens com.example.programming_project to javafx.fxml;
     exports com.example.programming_project;
