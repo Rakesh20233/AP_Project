@@ -15,8 +15,6 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
-import org.controlsfx.control.spreadsheet.Grid;
-
 public class Scene4_Comp {
 	Random random = new Random();
 
@@ -104,11 +102,6 @@ public class Scene4_Comp {
 		}
 
 		playTransitions(slides, roll);
-
-		// if (game.getChance())
-		//     Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-		// else
-		//     Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 	}
 
 	private void playTransitions(ImageView[] slides, int roll){
