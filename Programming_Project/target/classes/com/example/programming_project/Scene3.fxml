@@ -8,29 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
-<AnchorPane fx:id="Scene3Anchor" prefHeight="718.0" prefWidth="665.0" style="-fx-background-color: Brown;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.programming_project.Scene3">
-   <children>
-      <ImageView fitHeight="718.0" fitWidth="677.0" layoutX="-8.0" pickOnBounds="true">
-         <image>
-            <Image url="@ludo_background_dice.jpg" />
-         </image>
-      </ImageView>
-      <Button fx:id="Two_Player_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="255.0" layoutY="376.0" mnemonicParsing="false" text="Local Multiplayer">
-=======
 <AnchorPane fx:id="Scene3Anchor" prefHeight="609.0" prefWidth="665.0" style="-fx-background-color: Brown;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.programming_project.Scene3">
    <children>
       <Button fx:id="Two_Player_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="272.0" layoutY="323.0" mnemonicParsing="false" text="Pass 'n' Play">
->>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Button>
-<<<<<<< HEAD
-      <Button fx:id="VS_Computer_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="307.0" mnemonicParsing="false" onAction="#setonClickVS_Comp" text="VS Computer">
-=======
       <Button fx:id="VS_Computer_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="245.0" mnemonicParsing="false" onAction="#setonClickVS_Comp" text="VS Computer">
->>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
@@ -40,20 +25,12 @@
             <Image url="@snake_ladder_text.jpg" />
          </image>
       </ImageView>
-<<<<<<< HEAD
-      <Button fx:id="Settings_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="254.0" layoutY="453.0" mnemonicParsing="false" text="Online Multiplayer">
-=======
       <Button fx:id="Settings_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="296.0" layoutY="404.0" mnemonicParsing="false" text="Settings">
->>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Button>
-<<<<<<< HEAD
-      <Button fx:id="exit_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="268.0" layoutY="524.0" mnemonicParsing="false" onAction="#setonClickExit" text="Play with Friends">
-=======
       <Button fx:id="exit_bn" alignment="CENTER" contentDisplay="CENTER" layoutX="318.0" layoutY="478.0" mnemonicParsing="false" onAction="#setonClickExit" text="EXIT">
->>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>

@@ -28,10 +28,7 @@ public class Player {
 	}
 
 	public void move(int moveby){
-<<<<<<< HEAD
-=======
 		// a bit buggy currently
->>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 		if (direction){
 			if (x_location + moveby > 9){
 				y_location--;
@@ -42,19 +39,11 @@ public class Player {
 			}
 		}
 		else {
-<<<<<<< HEAD
-			if (x_location - moveby < 0 && y_location-1 >= 0){
-				y_location--;
-				x_location = Math.abs(1+(x_location-moveby));
-				direction = true;
-			}else if (y_location-1 >= 0){
-=======
 			if (x_location - moveby < 0 && y_location >= 0){
 				y_location--;
 				x_location = Math.abs(1+(x_location-moveby));
 				direction = true;
 			}else if (y_location >= 0){
->>>>>>> 62feb5ce8e528cf18822fc41359584532511f477
 				x_location -= moveby;
 			}
 		}

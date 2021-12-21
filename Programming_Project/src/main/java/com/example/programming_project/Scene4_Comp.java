@@ -70,60 +70,36 @@ public class Scene4_Comp {
 				img = new Image(getClass().getResourceAsStream("diceroll_1.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 2:
 				System.out.println("Got 2");
 				img = new Image(getClass().getResourceAsStream("diceroll_2.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 3:
 				System.out.println("Got 3");
 				img = new Image(getClass().getResourceAsStream("diceroll_3.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 4:
 				System.out.println("Got 4");
 				img = new Image(getClass().getResourceAsStream("gimpfiles/diceroll_4.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 5:
 				System.out.println("Got 5");
 				img = new Image(getClass().getResourceAsStream("diceroll_5.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 			case 6:
 				System.out.println("Got 6");
 				img = new Image(getClass().getResourceAsStream("diceroll_6.png"));
 				Final_Roll.setImage(img);
 				slides[1] = Final_Roll;
-				if (game.getChance())
-					Platform.runLater(new moveThePlayer(roll, this, game.pl1));
-				else
-					Platform.runLater(new moveThePlayer(roll, this, game.pl2));
 				break;
 		}
 
@@ -217,15 +193,6 @@ class moveThePlayer implements Runnable {
 				game_board.add(player_pawn, pl.x_location, pl.y_location);
 			}
 			game.toggleChance();
-		}
-		if (!game.getChance()){
-			try {
-				Thread.sleep(1000);
-			}catch (Exception e){
-				e.printStackTrace();
-			}
-			System.out.println("Computer turn...");
-			cur_scene.setonClickRoll(new ActionEvent());
 		}
 		if (!game.getChance())
 			Platform.runLater(new moveTheComp(cur_scene));
