@@ -61,23 +61,22 @@ public class Scene2 implements Initializable {
         media = new Media(songs.get(songNumber).toURI().toString());
         System.out.println(media.getMetadata());
         mediaPlayer = new MediaPlayer(media);
-        /* mediaPlayer.setAutoPlay(true); */
-		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-
-		mediaPlayer.setOnEndOfMedia(new Runnable() {
-			@Override
-			public void run() {
-				mediaPlayer.seek(Duration.ZERO);
-			}
-		});
-
-		mediaPlayer.setOnReady(new Runnable() {
-			@Override
-			public void run() {
-				mediaPlayer.play();
-			}
-		});
-		mediaPlayer.play();
+		mediaPlayer.setAutoPlay(true);
+		/* mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); */
+		/* mediaPlayer.setOnEndOfMedia(new Runnable() { */
+		/*     @Override */
+		/*     public void run() { */
+		/*         mediaPlayer.seek(Duration.ZERO); */
+		/*     } */
+		/* }); */
+        /*  */
+		/* mediaPlayer.setOnReady(new Runnable() { */
+		/*     @Override */
+		/*     public void run() { */
+		/*         mediaPlayer.play(); */
+		/*     } */
+		/* }); */
+		/* mediaPlayer.play(); */
     }
 
     public void pauseMedia() {
