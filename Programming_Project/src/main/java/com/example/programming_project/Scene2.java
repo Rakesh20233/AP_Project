@@ -35,14 +35,15 @@ public class Scene2 implements Initializable {
     private File directory;
     private File[] files;
 
-    private ArrayList<File> songs;
-    // private boolean running;
-	private boolean toggle = true;
+	private boolean flag = true;
 
-    private Media media;
-    private MediaPlayer mediaPlayer;
+    static ArrayList<File> songs;
+//    private boolean running;
 
-    private int songNumber;
+    static Media media;
+    static MediaPlayer mediaPlayer;
+
+    static int songNumber;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -59,55 +60,42 @@ public class Scene2 implements Initializable {
         }
 
         media = new Media(songs.get(songNumber).toURI().toString());
-        System.out.println(media.getMetadata());
         mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.setAutoPlay(true);
-		/* mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); */
-		/* mediaPlayer.setOnEndOfMedia(new Runnable() { */
-		/*     @Override */
-		/*     public void run() { */
-		/*         mediaPlayer.seek(Duration.ZERO); */
-		/*     } */
-		/* }); */
-        /*  */
-		/* mediaPlayer.setOnReady(new Runnable() { */
-		/*     @Override */
-		/*     public void run() { */
-		/*         mediaPlayer.play(); */
-		/*     } */
-		/* }); */
-		/* mediaPlayer.play(); */
+        mediaPlayer.setAutoPlay(true);
+//
     }
 
     public void pauseMedia() {
-		if (toggle){
+		if (flag){
 			mediaPlayer.pause();
-			toggle = false;
-		}else{
+			flag = false;
+		}
+		else{
 			mediaPlayer.play();
-			toggle = true;
+			flag = true;
 		}
     }
 
     public void nextMedia(){
 
-        if (songNumber < songs.size() - 1){
+        if (songNumber < songs.size()-1){
             songNumber++;
-            mediaPlayer.stop();
+            mediaPlayer.dispose();
 
             media = new Media(songs.get(songNumber).toURI().toString());
-			System.out.println(media.getMetadata());
             mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.getOnRepeat();
             mediaPlayer.setAutoPlay(true);
+
         }
 
-        if (songNumber == songs.size() - 1){
+        else if (songNumber == songs.size()-1){
             songNumber = 0;
-            mediaPlayer.stop();
+            mediaPlayer.dispose();
 
             media = new Media(songs.get(songNumber).toURI().toString());
-			System.out.println(media.getMetadata());
             mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.getOnRepeat();
             mediaPlayer.setAutoPlay(true);
         }
     }

@@ -10,7 +10,11 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import static com.example.programming_project.Scene2.*;
 
 public class Scene3 {
 
@@ -29,6 +33,8 @@ public class Scene3 {
 	@FXML
 	private Button Two_Player_bn;
 
+	private boolean flag = true;
+
 	Stage tmpStage;
 
 	public void setonClickExit(ActionEvent e){
@@ -43,5 +49,40 @@ public class Scene3 {
         Scene scene = new Scene(root);
         tmpStage.setScene(scene);
         tmpStage.show();
+	}
+
+	public void pauseMedia() {
+		if (flag){
+			Scene2.mediaPlayer.pause();
+			flag = false;
+		}
+		else{
+			Scene2.mediaPlayer.play();
+			flag = true;
+		}
+	}
+
+	public void nextMedia(){
+
+		if (songNumber < songs.size()-1){
+			songNumber++;
+			Scene2.mediaPlayer.dispose();
+
+			media = new Media(songs.get(songNumber).toURI().toString());
+			Scene2.mediaPlayer = new MediaPlayer(media);
+			Scene2.mediaPlayer.getOnRepeat();
+			Scene2.mediaPlayer.setAutoPlay(true);
+
+		}
+
+		else if (songNumber == songs.size()-1){
+			songNumber = 0;
+			Scene2.mediaPlayer.dispose();
+
+			media = new Media(songs.get(songNumber).toURI().toString());
+			Scene2.mediaPlayer = new MediaPlayer(media);
+			Scene2.mediaPlayer.getOnRepeat();
+			Scene2.mediaPlayer.setAutoPlay(true);
+		}
 	}
 }

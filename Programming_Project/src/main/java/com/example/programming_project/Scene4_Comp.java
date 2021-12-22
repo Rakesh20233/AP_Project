@@ -27,11 +27,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import static com.example.programming_project.Scene2.*;
 
 public class Scene4_Comp implements Initializable {
 	Random random = new Random();
@@ -69,6 +73,7 @@ public class Scene4_Comp implements Initializable {
 
 	private GameLogic game;
 	private boolean flag;
+	private boolean flag2 = true;
 	public static String wins;
 
 	public GameLogic getGame() { return game; }
@@ -197,6 +202,42 @@ public class Scene4_Comp implements Initializable {
 		tmp.setToValue(toValue);
 		tmp.setFromValue(fromValue);
 		return tmp;
+	}
+
+
+	public void pauseMedia() {
+		if (flag2){
+			Scene2.mediaPlayer.pause();
+			flag = false;
+		}
+		else{
+			Scene2.mediaPlayer.play();
+			flag = true;
+		}
+	}
+
+	public void nextMedia(){
+
+		if (songNumber < songs.size()-1){
+			songNumber++;
+			Scene2.mediaPlayer.dispose();
+
+			media = new Media(songs.get(songNumber).toURI().toString());
+			Scene2.mediaPlayer = new MediaPlayer(media);
+			Scene2.mediaPlayer.getOnRepeat();
+			Scene2.mediaPlayer.setAutoPlay(true);
+
+		}
+
+		else if (songNumber == songs.size()-1){
+			songNumber = 0;
+			Scene2.mediaPlayer.dispose();
+
+			media = new Media(songs.get(songNumber).toURI().toString());
+			Scene2.mediaPlayer = new MediaPlayer(media);
+			Scene2.mediaPlayer.getOnRepeat();
+			Scene2.mediaPlayer.setAutoPlay(true);
+		}
 	}
 }
 

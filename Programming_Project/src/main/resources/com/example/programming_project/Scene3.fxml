@@ -95,5 +95,7 @@
             <Font size="26.0" />
          </font>
       </Label>
+      <Button layoutX="571.0" layoutY="679.0" mnemonicParsing="false" onAction="#pauseMedia" text="| |" />
+      <Button layoutX="609.0" layoutY="679.0" mnemonicParsing="false" onAction="#nextMedia" text="Next" />
    </children>
 </AnchorPane>
