@@ -69,6 +69,7 @@ public class Scene4_Comp implements Initializable {
 
 	private GameLogic game;
 	private boolean flag;
+	public static String wins;
 
 	public GameLogic getGame() { return game; }
 	public GridPane getBoard() { return game_board;}
@@ -267,6 +268,7 @@ class moveThePlayer implements Runnable {
 						}
 						if (game.Collision(pl, game_board)){
 							System.out.println("Collision occurred");
+							game.toggleChance();
 						}
 					}
 				});
@@ -285,22 +287,20 @@ class moveThePlayer implements Runnable {
 						Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Win.fxml")));
 						Stage stage = new Stage();
 						Scene scene = new Scene(root);
+						if (win_pl[1]){
+							Scene4_Comp.wins = "Congratulations you won";
+						}else{
+							Scene4_Comp.wins = "Computer Wins";
+						}
 						stage.setScene(scene);
 						stage.show();
-						/* if (win_pl[1]){ */
-						/*     String win = "Congratulations you won"; */
-						/*     cur_scene.message.setText(win); */
-						/* }else{ */
-						/*     String win = "Computer Wins"; */
-						/*     cur_scene.message.setText(win); */
-						/* } */
 					} catch (Exception e){
 						e.printStackTrace();
 					}
 				}
 			});
 		}
-		if (!game.getChance()){
+		if (!game.getChance() && !win_pl[0]){
 			Platform.runLater(new moveTheComp(cur_scene));
 		}
 	}

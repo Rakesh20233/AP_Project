@@ -1,8 +1,8 @@
 path_to_files = ./src/main/java/com/example/programming_project/
 path_to_target = ./target/classes/com/example/programming_project/
 
-compileFiles = $(path_to_files)HelloApplication.java $(path_to_files)HelloController.java $(path_to_files)Scene2.java $(path_to_files)Scene3.java $(path_to_files)Scene4_Comp.java
-buildFiles = $(path_to_target)HelloApplication.class $(path_to_target)HelloController.class $(path_to_target)Scene2.class $(path_to_target)Scene3.class $(path_to_target)Scene4_Comp.class
+compileFiles = $(path_to_files)HelloApplication.java $(path_to_files)HelloController.java $(path_to_files)Scene2.java $(path_to_files)Scene3.java $(path_to_files)Scene4_Comp.java $(path_to_files)SceneWin.java
+buildFiles = $(path_to_target)HelloApplication.class $(path_to_target)HelloController.class $(path_to_target)Scene2.class $(path_to_target)Scene3.class $(path_to_target)Scene4_Comp.class $(path_to_target)SceneWin.class
 
 path_to_fx = /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.1/lib/
 
@@ -27,6 +27,9 @@ $(path_to_target)Scene3.class: $(path_to_files)Scene3.java
 
 $(path_to_target)Scene4_Comp.class: $(path_to_files)Scene4_Comp.java
 	javac $(BUILD_FLAGS) $(path_to_files)Scene4_Comp.java
+
+$(path_to_target)SceneWin.class: $(path_to_files)SceneWin.java
+	javac $(BUILD_FLAGS) $(path_to_files)SceneWin.java
 
 clean: $(buildFiles)
 	rm $(buildFiles)
