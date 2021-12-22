@@ -1,5 +1,11 @@
 package com.example.programming_project;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+import java.util.Random;
+import java.util.ResourceBundle;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
@@ -8,8 +14,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,15 +27,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.net.URL;
-import java.util.Random;
-import java.util.ResourceBundle;
 
 public class Scene4_Comp implements Initializable {
 	Random random = new Random();
@@ -34,7 +40,13 @@ public class Scene4_Comp implements Initializable {
 	private ImageView Rolling_Dice_Img;
 
 	@FXML
+	public Button back_bn;
+
+	@FXML
 	private ImageView Final_Roll;
+
+	@FXML 
+	public Label Status;
 
 	@FXML
 	private Button Roll_bn;
@@ -48,6 +60,8 @@ public class Scene4_Comp implements Initializable {
 	@FXML
 	private GridPane game_board;
 
+	@FXML public Label message;
+
 	@FXML
 	private Label monitor;
 
@@ -58,6 +72,14 @@ public class Scene4_Comp implements Initializable {
 
 	public GameLogic getGame() { return game; }
 	public GridPane getBoard() { return game_board;}
+
+	public void setOnClickBack(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Scene3.fxml")));
+        Stage stage = (Stage) Scene4Anchor.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle r){
@@ -207,13 +229,13 @@ class moveThePlayer implements Runnable {
 		if (roll == 6){
 			if (!pl.started){
 				pl.start();
-				Bounds og_xy = player_pawn.localToScene(player_pawn.getLayoutBounds());
+				/* Bounds og_xy = player_pawn.localToScene(player_pawn.getLayoutBounds()); */
 				/* GridPane.setRowIndex(player_pawn, pl.y_location); */
 				/* GridPane.setColumnIndex(player_pawn, pl.x_location); */
-				Bounds final_xy = game_board.localToScene(game_board.getCellBounds(pl.x_location, pl.y_location));
+				/* Bounds final_xy = game_board.localToScene(game_board.getCellBounds(pl.x_location, pl.y_location)); */
 
-				path_transition(og_xy, final_xy);
-				// game_board.add(player_pawn, pl.x_location, pl.y_location);
+				/* path_transition(og_xy, final_xy); */
+				game_board.add(player_pawn, pl.x_location, pl.y_location);
 			}else{
 				// Bounds og_xy = player_pawn.getBoundsInLocal();
 				pl.move(roll);
@@ -232,10 +254,52 @@ class moveThePlayer implements Runnable {
 				// path_transition(og_xy, final_xy);
 				game_board.getChildren().remove(player_pawn);
 				game_board.add(player_pawn, pl.x_location, pl.y_location);
+
+				Platform.runLater(new Runnable() {
+					public void run(){
+						if (game.OnSnake(pl)){
+							game_board.getChildren().remove(player_pawn);
+							game_board.add(player_pawn, pl.x_location, pl.y_location);
+						}
+						if (game.OnLadder(pl)){
+							game_board.getChildren().remove(player_pawn);
+							game_board.add(player_pawn, pl.x_location, pl.y_location);
+						}
+						if (game.Collision(pl, game_board)){
+							System.out.println("Collision occurred");
+						}
+					}
+				});
 			}
 			game.toggleChance();
 		}
 
+
+		boolean[] win_pl = game.checkendGame();
+		if (win_pl[0]){
+			// a bit buggy currently
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Win.fxml")));
+						Stage stage = new Stage();
+						Scene scene = new Scene(root);
+						stage.setScene(scene);
+						stage.show();
+						/* if (win_pl[1]){ */
+						/*     String win = "Congratulations you won"; */
+						/*     cur_scene.message.setText(win); */
+						/* }else{ */
+						/*     String win = "Computer Wins"; */
+						/*     cur_scene.message.setText(win); */
+						/* } */
+					} catch (Exception e){
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 		if (!game.getChance()){
 			Platform.runLater(new moveTheComp(cur_scene));
 		}
