@@ -8,10 +8,14 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
@@ -19,9 +23,11 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
+import java.net.URL;
 import java.util.Random;
+import java.util.ResourceBundle;
 
-public class Scene4_Comp {
+public class Scene4_Comp implements Initializable {
 	Random random = new Random();
 
 	@FXML
@@ -42,14 +48,38 @@ public class Scene4_Comp {
 	@FXML
 	private GridPane game_board;
 
+	@FXML
+	private Label monitor;
+
+	@FXML private AnchorPane Scene4Anchor;
+
 	private GameLogic game;
 	private boolean flag;
 
 	public GameLogic getGame() { return game; }
 	public GridPane getBoard() { return game_board;}
 
-	public Scene4_Comp (){
+	@Override
+	public void initialize(URL url, ResourceBundle r){
 		game = new GameLogic(player_pawn, comp_pawn);
+		if (game_board != null){
+			System.out.println("Initializing game_board");
+			game_board.setOnMouseMoved(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent e){
+					String location = "x: "+e.getX()+" y: "+e.getY();
+					monitor.setText(location);
+				}
+			});
+		}
+		if (Scene4Anchor != null){
+			System.out.println("Initializing Anchorpane");
+			Scene4Anchor.setOnMouseMoved(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent e){
+					String location = "x: "+e.getX()+" y: "+e.getY();
+					monitor.setText(location);
+				}
+			});
+		}
 		flag = true;
 	}
 
@@ -63,7 +93,7 @@ public class Scene4_Comp {
 		int roll = random.nextInt(1, 7);
 
 		if (flag){
-			game.setPlayerImages(player_pawn, comp_pawn);
+			// game.setPlayerImages(player_pawn, comp_pawn);
 			roll = 6;
 			flag = false;
 		}
@@ -177,44 +207,38 @@ class moveThePlayer implements Runnable {
 		if (roll == 6){
 			if (!pl.started){
 				pl.start();
-				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
-				Bounds og_xy = player_pawn.getBoundsInLocal();
-				Bounds final_xy = game_board.getCellBounds(0, 9);
+				Bounds og_xy = player_pawn.localToScene(player_pawn.getLayoutBounds());
+				/* GridPane.setRowIndex(player_pawn, pl.y_location); */
+				/* GridPane.setColumnIndex(player_pawn, pl.x_location); */
+				Bounds final_xy = game_board.localToScene(game_board.getCellBounds(pl.x_location, pl.y_location));
 
 				path_transition(og_xy, final_xy);
-				// give another move
+				// game_board.add(player_pawn, pl.x_location, pl.y_location);
 			}else{
-				/* Bounds og_xy = game_board.getCellBounds(pl.x_location, pl.y_location); */
-				Bounds og_xy = player_pawn.getBoundsInLocal();
-				/* getCenter(og_xy); */
+				// Bounds og_xy = player_pawn.getBoundsInLocal();
 				pl.move(roll);
-				/* game_board.getChildren().remove(player_pawn); */
-				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
-				Bounds final_xy = game_board.getCellBounds(pl.x_location, pl.y_location);
-				/* game_board.getChildren().remove(player_pawn); */
-				/* getCenter(final_xy); */
-
-				path_transition(og_xy, final_xy);
-
+				game_board.getChildren().remove(player_pawn);
+				game_board.add(player_pawn, pl.x_location, pl.y_location);
+				// Bounds final_xy = game_board.getCellBounds(pl.y_location, pl.x_location);
+                //
+				// path_transition(og_xy, final_xy);
 				// give another move to player
 			}
 		}else{
 			if (pl.started){
-				/* Bounds og_xy = game_board.getCellBounds(pl.x_location, pl.y_location); */
-				Bounds og_xy = player_pawn.getBoundsInLocal();
-				/* getCenter(og_xy); */
+				// Bounds og_xy = player_pawn.getBoundsInLocal();
 				pl.move(roll);
-				/* game_board.getChildren().remove(player_pawn); */
-				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
-				Bounds final_xy = game_board.getCellBounds(pl.x_location, pl.y_location);
-				/* getCenter(final_xy); */
-				/* game_board.getChildren().remove(player_pawn); */
-				path_transition(og_xy, final_xy);
+				// Bounds final_xy = game_board.getCellBounds(pl.y_location, pl.x_location);
+				// path_transition(og_xy, final_xy);
+				game_board.getChildren().remove(player_pawn);
+				game_board.add(player_pawn, pl.x_location, pl.y_location);
 			}
 			game.toggleChance();
 		}
-		/* if (!game.getChance()) */
-		/*     Platform.runLater(new moveTheComp(cur_scene)); */
+
+		if (!game.getChance()){
+			Platform.runLater(new moveTheComp(cur_scene));
+		}
 	}
 
 	private double getCenter(Bounds xy, boolean x){
@@ -228,12 +252,16 @@ class moveThePlayer implements Runnable {
 
 	private void path_transition(Bounds og_xy, Bounds final_xy){
 		System.out.println("Starting to transition");
-		/* Path pthMove = new Path(); */
-		/* pthMove.getElements().add(new MoveTo(cur_x, cur_y)); */
-		/* pthMove.getElements().add(new LineTo(new_x, new_y)); */
 
-		Line pthMove = new Line(getCenter(og_xy, true), getCenter(og_xy, false), getCenter(final_xy, true), getCenter(final_xy, false));
-		/* pthMove.toFront(); */
+		// Line pthMove = new Line();
+		// pthMove.setStartX(getCenter(og_xy, true));
+		// pthMove.setStartY(getCenter(og_xy, false));
+		// pthMove.setEndX(getCenter(final_xy, true));
+		// pthMove.setEndY(getCenter(final_xy, false));
+
+		Path pthMove = new Path();
+		pthMove.getElements().add(new MoveTo(getCenter(og_xy, true), getCenter(og_xy, false)));
+		pthMove.getElements().add(new LineTo(getCenter(final_xy, true), getCenter(final_xy, false)));
 
 		PathTransition path = new PathTransition();
 		path.setDuration(Duration.seconds(3));
@@ -244,12 +272,11 @@ class moveThePlayer implements Runnable {
 		path.setOnFinished(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent a){
-				/* game_board.add(player_pawn, pl.x_location, pl.y_location); */
 				System.out.println("Done playing");
 				Bounds tmp = player_pawn.localToScene(player_pawn.getBoundsInLocal());
 				System.out.println("Player pos: "+getCenter(tmp, true)+" "+getCenter(tmp, false));
-				if (!game.getChance())
-					Platform.runLater(new moveTheComp(cur_scene));
+				// if (!game.getChance())
+				//     Platform.runLater(new moveTheComp(cur_scene));
 			}
 		});
 		System.out.println("Playing the path");

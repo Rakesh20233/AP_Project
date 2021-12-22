@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,8 @@ public class Scene2 implements Initializable {
     private File[] files;
 
     private ArrayList<File> songs;
-    private boolean running;
+    // private boolean running;
+	private boolean toggle = true;
 
     private Media media;
     private MediaPlayer mediaPlayer;
@@ -59,12 +61,33 @@ public class Scene2 implements Initializable {
         media = new Media(songs.get(songNumber).toURI().toString());
         System.out.println(media.getMetadata());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+        /* mediaPlayer.setAutoPlay(true); */
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+		mediaPlayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				mediaPlayer.seek(Duration.ZERO);
+			}
+		});
+
+		mediaPlayer.setOnReady(new Runnable() {
+			@Override
+			public void run() {
+				mediaPlayer.play();
+			}
+		});
+		mediaPlayer.play();
     }
 
     public void pauseMedia() {
-
-        mediaPlayer.pause();
+		if (toggle){
+			mediaPlayer.pause();
+			toggle = false;
+		}else{
+			mediaPlayer.play();
+			toggle = true;
+		}
     }
 
     public void nextMedia(){
@@ -74,7 +97,7 @@ public class Scene2 implements Initializable {
             mediaPlayer.stop();
 
             media = new Media(songs.get(songNumber).toURI().toString());
-            System.out.println(media.getMetadata());
+			System.out.println(media.getMetadata());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
         }
@@ -84,7 +107,7 @@ public class Scene2 implements Initializable {
             mediaPlayer.stop();
 
             media = new Media(songs.get(songNumber).toURI().toString());
-            System.out.println(media.getMetadata());
+			System.out.println(media.getMetadata());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
         }
