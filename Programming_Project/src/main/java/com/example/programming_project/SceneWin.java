@@ -13,7 +13,7 @@ public class SceneWin implements Initializable{
 
 	@Override
 	public void initialize(URL url, ResourceBundle r){
-		System.out.println("running this");
+		System.out.println("running this Scene4_Comp: "+Scene4_Comp.wins);
 		if (message != null){
 			message.setText(Scene4_Comp.wins);
 		}else{

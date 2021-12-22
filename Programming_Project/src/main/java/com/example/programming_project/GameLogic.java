@@ -19,7 +19,7 @@ public class GameLogic {
 		if (pl1_image == null || pl2_image == null){
 			System.out.println("Sending a null image to pl1 & pl2");
 		}
-		pl1 = new Player(9, 1, pl1_image, "p1");
+		pl1 = new Player(0, 9, pl1_image, "p1");
 		pl2 = new Player(0, 9, pl2_image, "p2");
 		chance = true;
 

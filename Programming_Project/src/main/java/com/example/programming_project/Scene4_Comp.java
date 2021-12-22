@@ -279,26 +279,20 @@ class moveThePlayer implements Runnable {
 
 		boolean[] win_pl = game.checkendGame();
 		if (win_pl[0]){
-			// a bit buggy currently
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Win.fxml")));
-						Stage stage = new Stage();
-						Scene scene = new Scene(root);
-						if (win_pl[1]){
-							Scene4_Comp.wins = "Congratulations you won";
-						}else{
-							Scene4_Comp.wins = "Computer Wins";
-						}
-						stage.setScene(scene);
-						stage.show();
-					} catch (Exception e){
-						e.printStackTrace();
-					}
-				}
-			});
+			if (win_pl[1]){
+				Scene4_Comp.wins = "Congratulations you won";
+			}else{
+				Scene4_Comp.wins = "Computer Wins";
+			}
+			try {
+				Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Win.fxml")));
+				Stage stage = new Stage();
+				Scene scene = new Scene(root);
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		if (!game.getChance() && !win_pl[0]){
 			Platform.runLater(new moveTheComp(cur_scene));
