@@ -66,9 +66,6 @@ public class Scene4_Comp implements Initializable {
 
 	@FXML public Label message;
 
-	@FXML
-	private Label monitor;
-
 	@FXML private AnchorPane Scene4Anchor;
 
 	private GameLogic game;
@@ -90,24 +87,6 @@ public class Scene4_Comp implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle r){
 		game = new GameLogic(player_pawn, comp_pawn);
-		if (game_board != null){
-			System.out.println("Initializing game_board");
-			game_board.setOnMouseMoved(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent e){
-					String location = "x: "+e.getX()+" y: "+e.getY();
-					monitor.setText(location);
-				}
-			});
-		}
-		if (Scene4Anchor != null){
-			System.out.println("Initializing Anchorpane");
-			Scene4Anchor.setOnMouseMoved(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent e){
-					String location = "x: "+e.getX()+" y: "+e.getY();
-					monitor.setText(location);
-				}
-			});
-		}
 		flag = true;
 	}
 
@@ -121,7 +100,6 @@ public class Scene4_Comp implements Initializable {
 		int roll = random.nextInt(1, 7);
 
 		if (flag){
-			// game.setPlayerImages(player_pawn, comp_pawn);
 			roll = 6;
 			flag = false;
 		}
@@ -208,11 +186,11 @@ public class Scene4_Comp implements Initializable {
 	public void pauseMedia() {
 		if (flag2){
 			Scene2.mediaPlayer.pause();
-			flag = false;
+			flag2 = false;
 		}
 		else{
 			Scene2.mediaPlayer.play();
-			flag = true;
+			flag2 = true;
 		}
 	}
 
